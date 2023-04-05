@@ -4,16 +4,10 @@ FROM golang:1.20
 WORKDIR /app
 
 # Download Go modules
-COPY go.mod go.sum ./
-RUN go mod download
-
-# Add dependencies
-RUN go mod tidy 
-RUN go get github.com/corazawaf/coraza/v3 
-RUN go get github.com/corazawaf/coraza/v3/http 
-RUN go get github.com/corazawaf/coraza/v3/types
 
 COPY *.go ./
+RUN go mod init github.com/gin-gitaxias/Ping-go
+RUN go mod download
 
 # Build
 RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-coraza
